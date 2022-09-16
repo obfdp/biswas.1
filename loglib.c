@@ -3,7 +3,6 @@
 #include <string.h>
 #include <time>
 #include "log.h"
-#define TRAV_INIT_SIZE 8
 
 typedef struct list_struct {
 	data_t item;
@@ -47,12 +46,8 @@ int addmsg(const char type, const char * msg) { /* allocate node for message and
 	return 0;
 }
 
-void clearlog(int key) { /* releases all the storage that has been allocated for the logged message and empties the list of logged messages */
-	if ( (key < 0) || (key >= travptrs_size) ) { /* key out of range */
- 		errno = EINVAL;
- 		return -1;
- 	}
- 	travptrs[key] = NULL;
+void clearlog( string **store) { /* releases all the storage that has been allocated for the logged message and empties the list of logged messages */
+	free(store);
  	return 0;
 }
 
@@ -60,6 +55,9 @@ char * getlog(){
 	char ch;
 
 	FILE *fp;
+	string msg;
+	string *m
+	string **store
 	fp = fopen("message.log", "r"); // read mode
 
 	if (fp == NULL)
@@ -67,13 +65,29 @@ char * getlog(){
 		perror("Error while opening the file.\n");
 		exit(EXIT_FAILURE);
 	}
+	while ((ch = fgetc(file)) != EOF)
+    {
+        msg = ch;
+    }
+    m = &msg;
 
-	printf("The contents of %s file are:\n", file_name);
+
+   if(!m){
+   perror("Error occured allocating memory");
+   exit(-1);
+   }
+
+	store = malloc(sizeof(m));
+
+	printf("The contents of %s file are:\n", "message.log");
 
 	while((ch = fgetc(fp)) != EOF)
 		printf("%c", ch);
 
 	fclose(fp);
+
+
+
 }
 
 int savelog ( char * filename ) //savelog function saves the logged message to a disk file.
@@ -108,6 +122,10 @@ int savelog ( char * filename ) //savelog function saves the logged message to a
     fflush(log_global_set.out_file);
     return 0;
 }
+
+
+
+
 
 
 
