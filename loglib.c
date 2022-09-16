@@ -1,7 +1,7 @@
 #include <errno.h>
 #include <stdlib.h>
 #include <string.h>
-#include <time.h>
+#include <time>
 #include "log.h"
 #define TRAV_INIT_SIZE 8
 
@@ -15,12 +15,14 @@ static list_t *headptr = NULL;
 static list_t *tailptr = NULL;
 static list_t **travptrs = NULL;
 static int travptrs_size = 0;
+static struct logger_t log_global_set;
+
 
 time_t current_time;
 struct tm * time_info;
 char timeString[9];
 
-int addmsg(data_t data) { /* allocate node for data and add to end of list */
+int addmsg(const char type, const char * msg) { /* allocate node for message and add to end of list */
 	list_t *newnode;
  	int nodesize;
  	nodesize = sizeof(list_t) + strlen(data.string) + 1;
@@ -45,8 +47,13 @@ int addmsg(data_t data) { /* allocate node for data and add to end of list */
 	return 0;
 }
 
-void clearlog() { /* free memory allocated */
-	
+void clearlog(int key) { /* releases all the storage that has been allocated for the logged message and empties the list of logged messages */
+	if ( (key < 0) || (key >= travptrs_size) ) { /* key out of range */
+ 		errno = EINVAL;
+ 		return -1;
+ 	}
+ 	travptrs[key] = NULL;
+ 	return 0;
 }
 
 char * getlog(){
@@ -69,16 +76,41 @@ char * getlog(){
 	fclose(fp);
 }
 
-int savelog ( char * filename )
+int savelog ( char * filename ) //savelog function saves the logged message to a disk file.
 {
-  FILE *fptr;
-  fptr = fopen("filename","w");
-  if(fptr == NULL)
-   {
-      printf("Error!");
-      exit(1);
-   }
-  fprintf(fptr,"%s",addmsg());
-  fclose(fptr);
+    struct tm* current_tm;
+    time_t time_now;
+
+    time(&time_now);
+    current_tm = localtime(&time_now);
+
+
+
+    log_global_set.out_file = fopen(filename, "w"); //write mode
+
+    if (log_global_set.out_file == NULL) {
+        log_error("Failed to open file %s error %s", filename, strerror(errno));
+        return -1;
+    }
+
+    int result = fprintf(log_global_set.out_file,
+            "%s: %02i:%02i:%02i\n"
+                , message
+                , current_tm->tm_hour
+                , current_tm->tm_min
+                , current_tm->tm_sec);
+
+    if (result == -1) {
+        printf("Unable to write to log file!");
+        return -1;
+    }
+
+    fflush(log_global_set.out_file);
+    return 0;
 }
+
+
+
+
+
 
