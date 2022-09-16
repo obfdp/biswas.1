@@ -4,7 +4,7 @@ TARGET = driver
 OBJS = driver.o loglib.o
 
 $(TARGET): $(OBJS)
-	$(CC)-o $(TARGET) $(OBJS)
+	$(CC) -o $(TARGET) $(OBJS)
 
 loglib.o : loglib.c
 	$(CC) $(CFLAGS) -c loglib.c
