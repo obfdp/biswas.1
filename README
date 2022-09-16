@@ -1,11 +1,11 @@
-s project asks us to develop a logging utility that allows the caller to save message at the end of the list.
+This project asks us to develop a logging utility that allows the caller to save message at the end of the list.
 Also it would record the time of the message it was logged in. We were given a header file log.h which had the following functions
 addmsg(),clearlog(),getlog(),savelog() and a data_t structure that holds a time_t value (time) and a pointer to a character string
 of undetermined length (string).
 
 Challenges faced :
 
-1. I was able to set up the git repository. 
+1. I was able to set up the git repository. My Github Repository Link for Project 1 : https://github.com/obfdp/biswas.1.git 
 2. I was also able to successfully create a Makefile and used suffix rules.
 3. I also read getopt() and perror() from the documentation provided in the class but when it comes to implementation I wasn't able to do that.
    I hardcoded the custom message using perror for various cases. 

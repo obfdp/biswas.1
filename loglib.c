@@ -125,5 +125,3 @@ int savelog ( char * filename ) //savelog function saves the logged message to a
 
 
 
-
-
