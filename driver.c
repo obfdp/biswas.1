@@ -1,9 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include <sys/types.h>
-#include <sys/ipc.h>
-#include <sys/shm.h>
+#include "log.h"
+
 
 int main(int argc, char * argv[]) {
   int opt;
@@ -44,6 +43,20 @@ while ((opt = getopt(argc, argv, "h")) != -1) {
       break;;
     }
   }
+  
+// open the file for writing the counter value
 
+FILE *fp = fopen(filename, "w");
+  if (fp == NULL)
+	{
+  	    fprintf(stderr, "Error opening the file %s", filename);
+        return -1;
+  }
+   
+  fprintf(fp, "Delay time #%d \n", *t);
+  // close the file
 
+ fclose(fp);
 
+  return ;
+}
