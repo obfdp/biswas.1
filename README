@@ -1,0 +1,26 @@
+s project asks us to develop a logging utility that allows the caller to save message at the end of the list.
+Also it would record the time of the message it was logged in. We were given a header file log.h which had the following functions
+addmsg(),clearlog(),getlog(),savelog() and a data_t structure that holds a time_t value (time) and a pointer to a character string
+of undetermined length (string).
+
+Challenges faced :
+
+1. I was able to set up the git repository. 
+2. I was also able to successfully create a Makefile and used suffix rules.
+3. I also read getopt() and perror() from the documentation provided in the class but when it comes to implementation I wasn't able to do that.
+   I hardcoded the custom message using perror for various cases. 
+4. I did use time and localtime functions in my code to get the current time.
+5. For addmsg() function I tried creating data_t and also tried adding timestamp,also tried inserting the copy of data_t at the end of the list. 
+6. In the savelog function I tried to write the messages to a file
+7. In clearlog tried to use free() function to clear the memory allocated previously.
+8. In getlog() function tried allocating memory for the messages and read those from the file message.log
+
+PLEASE NOTE: I do not have any experience in C and purely due to lack of such experience, I was not able to fully write the functions mentioned in log.h properly. 
+I tried reading and looking into videos and tutorials that would help me, but that was not of much help for Project 1 due to lack of sufficient time.
+I went through linkedlists, how to allocate memory using malloc, calloc and realloc.I also read getopt() , perror() and went through the 
+documentation provided on Canvas. I am understanding the structure and theory but when it comes to implementation I wasn't able to implement
+it correctly. I really tried working hard on this project and despie having started early, this was all I could realistically do given the timeframe.
+
+I would really appreciate it if coding/project related exercises, tutorials and examples are provided and demonstrated in class to help me 
+learn coding/developing programs that are required in completing the projects for this course. 
+
